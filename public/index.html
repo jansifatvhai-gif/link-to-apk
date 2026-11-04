@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link to APK Generator - Free</title>
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        body { background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        h2 { margin-bottom: 20px; color: #333; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        button { width: 100%; padding: 12px; background: #28a745; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        button:disabled { background: #888; }
+        #status { margin-top: 15px; font-size: 14px; color: #555; }
+        .download-btn { display: inline-block; margin-top: 15px; padding: 12px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Link To APK Maker</h2>
+    <input type="text" id="appName" placeholder="অ্যাপের নাম লিখুন (যেমন: My App)" required>
+    <input type="url" id="webUrl" placeholder="ওয়েবসাইট লিংক (যেমন: https://example.com)" required>
+    
+    <button id="buildBtn" onclick="startProcess()">Create APK (Watch Ad)</button>
+    
+    <p id="status"></p>
+    <div id="downloadArea"></div>
+</div>
+
+<script>
+    // আপনার Ad Network (Adsterra/Monetag) এর ডিরেক্ট লিংক এখানে বসাবেন
+    const AD_DIRECT_LINK = "https://www.google.com"; // এখানে আপনার অ্যাড লিংক দিন
+
+    async function startProcess() {
+        const appName = document.getElementById('appName').value;
+        const webUrl = document.getElementById('webUrl').value;
+        const status = document.getElementById('status');
+        const downloadArea = document.getElementById('downloadArea');
+        const btn = document.getElementById('buildBtn');
+
+        if (!appName || !webUrl) {
+            alert("সব তথ্য সঠিকভাবে পূরণ করুন!");
+            return;
+        }
+
+        // ১. নতুন ট্যাবে অ্যাড ওপেন করা
+        window.open(AD_DIRECT_LINK, '_blank');
+
+        // ২. লোডিং শুরু
+        btn.disabled = true;
+        status.innerText = "অ্যাড দেখা হচ্ছে এবং APK তৈরি হচ্ছে... অপেক্ষা করুন...";
+
+        try {
+            const response = await fetch('/api/generate-apk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ appName, webUrl })
+            });
+
+            const data = await response.json();
+
+            if (data.downloadUrl) {
+                status.innerText = "APK প্রস্তুত!";
+                downloadArea.innerHTML = `<a href="${data.downloadUrl}" class="download-btn" download>Download APK</a>`;
+            } else {
+                status.innerText = "সমস্যা হয়েছে: " + (data.error || "ব্যর্থ হয়েছে");
+            }
+        } catch (error) {
+            status.innerText = "সার্ভারে কানেক্ট হতে সমস্যা হচ্ছে!";
+        } finally {
+            btn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>
