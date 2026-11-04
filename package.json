@@ -1,7 +1,6 @@
 {
-  "name": "pro-link-html-to-apk",
-  "version": "2.0.0",
-  "description": "Convert Web/HTML to APK with Device Limits and Custom Packages",
+  "name": "madara-apk-builder",
+  "version": "1.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
