@@ -1,7 +1,7 @@
 {
-  "name": "link-to-apk-generator",
-  "version": "1.0.0",
-  "description": "Convert Website Link to APK",
+  "name": "pro-link-html-to-apk",
+  "version": "2.0.0",
+  "description": "Convert Web/HTML to APK with Device Limits and Custom Packages",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -9,6 +9,8 @@
   "dependencies": {
     "express": "^4.19.2",
     "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "@supabase/supabase-js": "^2.39.8",
     "adm-zip": "^0.5.10"
   }
 }
