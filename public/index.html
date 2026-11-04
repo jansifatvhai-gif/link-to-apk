@@ -3,63 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Web & HTML to APK Maker</title>
+    <title>Tʜᴇㅤᴍᴀᴅᴀʀᴀ⁷ - APK Studio</title>
     <style>
         :root {
-            --primary: #8b5cf6;
-            --accent: #06b6d4;
-            --bg: #090d16;
-            --card-bg: rgba(17, 24, 39, 0.85);
+            --primary: #ef4444;
+            --accent: #f97316;
+            --bg: #090a0f;
+            --card-bg: rgba(18, 20, 29, 0.85);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
-        body { background: radial-gradient(circle at 50% 0%, #1e1b4b, var(--bg)); color: #f8fafc; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 15px; }
-        .card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 25px; width: 100%; max-width: 450px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: radial-gradient(circle at 50% 0%, #450a0a, var(--bg)); color: #f8fafc; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 15px; }
+        
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(14px); 
+            border: 1px solid rgba(239, 68, 68, 0.2); 
+            border-radius: 20px; 
+            padding: 25px; 
+            width: 100%; 
+            max-width: 440px; 
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.15); 
+        }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .token-badge { background: linear-gradient(135deg, var(--primary), var(--accent)); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .logo-title { font-size: 20px; font-weight: bold; background: linear-gradient(135deg, #f87171, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .token-badge { background: linear-gradient(135deg, var(--primary), var(--accent)); padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
 
-        .type-toggle { display: flex; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 4px; margin-bottom: 20px; }
-        .toggle-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #94a3b8; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .type-toggle { display: flex; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 4px; margin-bottom: 18px; }
+        .toggle-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #94a3b8; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 12px; }
         .toggle-btn.active { background: var(--primary); color: white; }
 
         .icon-uploader { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; }
-        .icon-preview { width: 70px; height: 70px; border-radius: 18px; border: 2px dashed rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; }
+        .icon-preview { width: 70px; height: 70px; border-radius: 18px; border: 2px dashed rgba(239,68,68,0.4); display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; transition: 0.3s; }
+        .icon-preview:hover { border-color: var(--primary); transform: scale(1.05); }
         .icon-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
 
         .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
-        input[type="text"], input[type="url"], input[type="file"] { width: 100%; padding: 11px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; color: white; font-size: 13px; }
+        .form-group label { display: block; font-size: 11px; color: #94a3b8; margin-bottom: 5px; }
+        input[type="text"], input[type="url"], input[type="file"] { width: 100%; padding: 11px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; color: white; font-size: 13px; outline: none; }
+        input[type="text"]:focus, input[type="url"]:focus { border-color: var(--primary); }
 
-        .anim-checkbox { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 15px 0; color: #cbd5e1; }
-        .anim-checkbox input { width: 16px; height: 16px; accent-color: var(--primary); }
+        .anim-checkbox { display: flex; align-items: center; gap: 8px; font-size: 12px; margin: 15px 0; color: #cbd5e1; }
+        .anim-checkbox input { accent-color: var(--primary); width: 16px; height: 16px; }
 
-        .build-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .build-btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .build-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .build-btn:hover { opacity: 0.95; transform: translateY(-2px); }
         .build-btn:disabled { background: #475569; cursor: not-allowed; transform: none; }
 
         .status { margin-top: 15px; text-align: center; font-size: 13px; color: #38bdf8; }
-        .download-btn { display: none; margin-top: 15px; width: 100%; padding: 12px; background: #10b981; color: white; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        .download-btn { display: none; margin-top: 15px; width: 100%; padding: 13px; background: #10b981; color: white; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="card">
     <div class="header">
-        <h3>APK Builder Pro</h3>
-        <span class="token-badge" id="tokenDisplay">টোকেন: লোড হচ্ছে...</span>
+        <span class="logo-title">Tʜᴇㅤᴍᴀᴅᴀʀᴀ⁷</span>
+        <span class="token-badge" id="tokenDisplay">টোকেন: ...</span>
     </div>
 
-    <!-- মোড সিলেকশন (URL নাকি অফলাইন HTML) -->
+    <!-- মোড সিলেকশন -->
     <div class="type-toggle">
         <button class="toggle-btn active" id="modeUrl" onclick="switchMode('url')">Website Link</button>
         <button class="toggle-btn" id="modeHtml" onclick="switchMode('html')">HTML Zip (Max 5MB)</button>
     </div>
 
-    <!-- অ্যাপ আইকন (Max 1MB) -->
+    <!-- আইকন আপলোডার (১ MB লিমিট) -->
     <div class="icon-uploader">
         <label for="appIcon" class="icon-preview">
-            <span id="iconText">Icon</span>
+            <span id="iconText" style="font-size:12px; color:#cbd5e1;">Icon</span>
             <img id="iconImg" alt="Preview">
         </label>
         <span style="font-size: 11px; color: #94a3b8; margin-top: 4px;">App Icon (Max 1 MB)</span>
@@ -72,8 +85,8 @@
     </div>
 
     <div class="form-group">
-        <label>Package Name (Play Store স্টাইল)</label>
-        <input type="text" id="packageName" placeholder="যেমন: com.mycompany.app" value="com.app.webview">
+        <label>Package Name</label>
+        <input type="text" id="packageName" placeholder="com.madara.myapp" value="com.madara.app">
     </div>
 
     <!-- লিংক ইনপুট -->
@@ -82,16 +95,15 @@
         <input type="url" id="targetUrl" placeholder="https://example.com">
     </div>
 
-    <!-- HTML Zip ইনপুট -->
+    <!-- HTML Zip ইনপুট (৫ MB লিমিট) -->
     <div class="form-group" id="htmlGroup" style="display: none;">
-        <label>Upload HTML, CSS, JS Zip File (Max 5 MB)</label>
+        <label>Upload HTML, CSS, JS Zip (Max 5 MB)</label>
         <input type="file" id="htmlZip" accept=".zip">
     </div>
 
-    <!-- ওপেনিং অ্যানিমেশন চেকবক্স -->
     <div class="anim-checkbox">
         <input type="checkbox" id="splashAnimation" checked>
-        <label for="splashAnimation">App Opening Animation / Splash Screen যুক্ত থাকবে</label>
+        <label for="splashAnimation">App Opening Animation / Splash Screen চালু থাকবে</label>
     </div>
 
     <button class="build-btn" id="buildBtn" onclick="createAPK()">Create APK</button>
@@ -103,19 +115,19 @@
 <script>
     let currentMode = 'url';
 
-    // ডিভাইস আইডি সেটআপ (ইউনিক আইডি প্রতি ফোনের জন্য)
-    let deviceId = localStorage.getItem('user_device_id');
+    // ইউনিক ডিভাইস আইডি সেটআপ
+    let deviceId = localStorage.getItem('madara_device_id');
     if (!deviceId) {
         deviceId = 'dev_' + Math.random().toString(36).substring(2, 9) + Date.now();
-        localStorage.setItem('user_device_id', deviceId);
+        localStorage.setItem('madara_device_id', deviceId);
     }
 
-    // টোকেন সংখ্যা চেক
+    // প্রতিদিনের টোকেন লোড
     async function updateTokenCount() {
         try {
             const res = await fetch(`/api/check-tokens/${deviceId}`);
             const data = await res.json();
-            document.getElementById('tokenDisplay').innerText = `আজকের বাকি: ${data.tokens} / 5 APK`;
+            document.getElementById('tokenDisplay').innerText = `বাকি: ${data.tokens} / 5 APK`;
             if (data.tokens <= 0) {
                 document.getElementById('buildBtn').disabled = true;
                 document.getElementById('statusBox').innerText = "আজকের ৫টি APK লিমিট শেষ হয়ে গেছে!";
@@ -143,7 +155,7 @@
         const file = e.target.files[0];
         if (file) {
             if (file.size > 1024 * 1024) {
-                alert("আইকন সাইজ ১ MB-এর কম হতে হবে!");
+                alert("আইকন সাইজ সর্বোচ্চ ১ MB হতে হবে!");
                 e.target.value = '';
                 return;
             }
@@ -167,7 +179,7 @@
         const buildBtn = document.getElementById('buildBtn');
 
         if (!appName || !packageName) {
-            alert("App Name এবং Package Name পূরণ করুন!");
+            alert("App Name এবং Package Name দিন!");
             return;
         }
 
@@ -192,17 +204,17 @@
 
         buildBtn.disabled = true;
         downloadBtn.style.display = 'none';
-        statusBox.innerText = "APK তৈরি হচ্ছে... অপেক্ষা করুন...";
+        statusBox.innerText = "Tʜᴇㅤᴍᴀᴅᴀʀᴀ⁷ ইঞ্জিনে APK প্রস্তুত হচ্ছে...";
 
         try {
             const res = await fetch('/api/create-apk', { method: 'POST', body: formData });
             const data = await res.json();
 
             if (res.ok && data.success) {
-                statusBox.innerText = "সফলভাবে তৈরি হয়েছে!";
+                statusBox.innerText = "APK সফলভাবে তৈরি হয়েছে!";
                 downloadBtn.href = data.downloadUrl;
                 downloadBtn.style.display = 'block';
-                document.getElementById('tokenDisplay').innerText = `আজকের বাকি: ${data.tokensRemaining} / 5 APK`;
+                document.getElementById('tokenDisplay').innerText = `বাকি: ${data.tokensRemaining} / 5 APK`;
             } else {
                 statusBox.innerText = "ত্রুটি: " + (data.error || "ব্যর্থ হয়েছে");
             }
