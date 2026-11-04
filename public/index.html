@@ -3,330 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link to APK Builder - Pro</title>
+    <title>Pro Web & HTML to APK Maker</title>
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary: #8b5cf6;
+            --accent: #06b6d4;
+            --bg: #090d16;
+            --card-bg: rgba(17, 24, 39, 0.85);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: radial-gradient(circle at 50% 0%, #1e1b4b, var(--bg)); color: #f8fafc; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 15px; }
+        .card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 25px; width: 100%; max-width: 450px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
 
-        body {
-            background: radial-gradient(circle at top, #1e1b4b, #0f172a);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .token-badge { background: linear-gradient(135deg, var(--primary), var(--accent)); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
 
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.8s ease-out;
-            text-align: center;
-        }
+        .type-toggle { display: flex; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 4px; margin-bottom: 20px; }
+        .toggle-btn { flex: 1; padding: 10px; border: none; background: transparent; color: #94a3b8; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .toggle-btn.active { background: var(--primary); color: white; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .icon-uploader { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; }
+        .icon-preview { width: 70px; height: 70px; border-radius: 18px; border: 2px dashed rgba(255,255,255,0.2); display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; }
+        .icon-preview img { width: 100%; height: 100%; object-fit: cover; display: none; }
 
-        h2 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #a5b4fc, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
+        input[type="text"], input[type="url"], input[type="file"] { width: 100%; padding: 11px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 8px; color: white; font-size: 13px; }
 
-        p.subtitle {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 25px;
-        }
+        .anim-checkbox { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 15px 0; color: #cbd5e1; }
+        .anim-checkbox input { width: 16px; height: 16px; accent-color: var(--primary); }
 
-        /* Icon Upload & Preview */
-        .icon-uploader {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+        .build-btn { width: 100%; padding: 13px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .build-btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .build-btn:disabled { background: #475569; cursor: not-allowed; transform: none; }
 
-        .icon-preview-box {
-            width: 75px;
-            height: 75px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .icon-preview-box:hover {
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
-
-        .icon-preview-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .icon-label {
-            font-size: 12px;
-            color: #cbd5e1;
-            cursor: pointer;
-        }
-
-        #iconInput {
-            display: none;
-        }
-
-        /* Form Inputs */
-        .input-group {
-            text-align: left;
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 6px;
-        }
-
-        input[type="text"], input[type="url"] {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            font-size: 14px;
-            outline: none;
-            transition: border 0.3s;
-        }
-
-        input[type="text"]:focus, input[type="url"]:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Submit Button */
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #6366f1, #4338ca);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px rgba(99, 102, 241, 0.5);
-        }
-
-        button:disabled {
-            background: #475569;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .progress-bar-bg {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            height: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #6366f1, #ec4899);
-            border-radius: 10px;
-            transition: width 0.4s ease;
-        }
-
-        #statusText {
-            margin-top: 10px;
-            font-size: 13px;
-            color: #cbd5e1;
-        }
-
-        .download-box {
-            display: none;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .download-btn {
-            display: inline-block;
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-            transition: all 0.3s;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-        }
+        .status { margin-top: 15px; text-align: center; font-size: 13px; color: #38bdf8; }
+        .download-btn { display: none; margin-top: 15px; width: 100%; padding: 12px; background: #10b981; color: white; text-align: center; text-decoration: none; border-radius: 8px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Web to APK Studio</h2>
-    <p class="subtitle">Convert any website into a real Android App</p>
+    <div class="header">
+        <h3>APK Builder Pro</h3>
+        <span class="token-badge" id="tokenDisplay">টোকেন: লোড হচ্ছে...</span>
+    </div>
 
-    <!-- App Icon Upload -->
+    <!-- মোড সিলেকশন (URL নাকি অফলাইন HTML) -->
+    <div class="type-toggle">
+        <button class="toggle-btn active" id="modeUrl" onclick="switchMode('url')">Website Link</button>
+        <button class="toggle-btn" id="modeHtml" onclick="switchMode('html')">HTML Zip (Max 5MB)</button>
+    </div>
+
+    <!-- অ্যাপ আইকন (Max 1MB) -->
     <div class="icon-uploader">
-        <label for="iconInput" class="icon-preview-box" id="previewContainer">
-            <span id="uploadPlaceholder">🖼️ Icon</span>
-            <img id="iconPreview" alt="App Icon">
+        <label for="appIcon" class="icon-preview">
+            <span id="iconText">Icon</span>
+            <img id="iconImg" alt="Preview">
         </label>
-        <label for="iconInput" class="icon-label">Tap to upload App Icon</label>
-        <input type="file" id="iconInput" accept="image/*" onchange="previewImage(event)">
+        <span style="font-size: 11px; color: #94a3b8; margin-top: 4px;">App Icon (Max 1 MB)</span>
+        <input type="file" id="appIcon" accept="image/*" style="display:none;" onchange="previewIcon(event)">
     </div>
 
-    <!-- Inputs -->
-    <div class="input-group">
+    <div class="form-group">
         <label>App Name</label>
-        <input type="text" id="appName" placeholder="e.g. My Website App" required>
+        <input type="text" id="appName" placeholder="যেমন: My Super App">
     </div>
 
-    <div class="input-group">
+    <div class="form-group">
+        <label>Package Name (Play Store স্টাইল)</label>
+        <input type="text" id="packageName" placeholder="যেমন: com.mycompany.app" value="com.app.webview">
+    </div>
+
+    <!-- লিংক ইনপুট -->
+    <div class="form-group" id="urlGroup">
         <label>Website URL</label>
-        <input type="url" id="webUrl" placeholder="https://yourwebsite.com" required>
+        <input type="url" id="targetUrl" placeholder="https://example.com">
     </div>
 
-    <button id="buildBtn" onclick="generateAPK()">Build APK Now</button>
-
-    <!-- Progress UI -->
-    <div class="progress-container" id="progressArea">
-        <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progressFill"></div>
-        </div>
-        <p id="statusText">Starting build process...</p>
+    <!-- HTML Zip ইনপুট -->
+    <div class="form-group" id="htmlGroup" style="display: none;">
+        <label>Upload HTML, CSS, JS Zip File (Max 5 MB)</label>
+        <input type="file" id="htmlZip" accept=".zip">
     </div>
 
-    <!-- Download Button Area -->
-    <div class="download-box" id="downloadArea">
-        <a href="#" id="downloadLink" class="download-btn" download>📥 Download Generated APK</a>
+    <!-- ওপেনিং অ্যানিমেশন চেকবক্স -->
+    <div class="anim-checkbox">
+        <input type="checkbox" id="splashAnimation" checked>
+        <label for="splashAnimation">App Opening Animation / Splash Screen যুক্ত থাকবে</label>
     </div>
+
+    <button class="build-btn" id="buildBtn" onclick="createAPK()">Create APK</button>
+
+    <p class="status" id="statusBox"></p>
+    <a href="#" class="download-btn" id="downloadBtn" download>📥 Download Created APK</a>
 </div>
 
 <script>
-    // Live Icon Preview
-    function previewImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.getElementById('iconPreview');
-                img.src = e.target.result;
-                img.style.display = 'block';
-                document.getElementById('uploadPlaceholder').style.display = 'none';
+    let currentMode = 'url';
+
+    // ডিভাইস আইডি সেটআপ (ইউনিক আইডি প্রতি ফোনের জন্য)
+    let deviceId = localStorage.getItem('user_device_id');
+    if (!deviceId) {
+        deviceId = 'dev_' + Math.random().toString(36).substring(2, 9) + Date.now();
+        localStorage.setItem('user_device_id', deviceId);
+    }
+
+    // টোকেন সংখ্যা চেক
+    async function updateTokenCount() {
+        try {
+            const res = await fetch(`/api/check-tokens/${deviceId}`);
+            const data = await res.json();
+            document.getElementById('tokenDisplay').innerText = `আজকের বাকি: ${data.tokens} / 5 APK`;
+            if (data.tokens <= 0) {
+                document.getElementById('buildBtn').disabled = true;
+                document.getElementById('statusBox').innerText = "আজকের ৫টি APK লিমিট শেষ হয়ে গেছে!";
             }
+        } catch(e) {}
+    }
+    updateTokenCount();
+
+    function switchMode(mode) {
+        currentMode = mode;
+        if (mode === 'url') {
+            document.getElementById('modeUrl').classList.add('active');
+            document.getElementById('modeHtml').classList.remove('active');
+            document.getElementById('urlGroup').style.display = 'block';
+            document.getElementById('htmlGroup').style.display = 'none';
+        } else {
+            document.getElementById('modeHtml').classList.add('active');
+            document.getElementById('modeUrl').classList.remove('active');
+            document.getElementById('urlGroup').style.display = 'none';
+            document.getElementById('htmlGroup').style.display = 'block';
+        }
+    }
+
+    function previewIcon(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 1024 * 1024) {
+                alert("আইকন সাইজ ১ MB-এর কম হতে হবে!");
+                e.target.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = () => {
+                document.getElementById('iconImg').src = reader.result;
+                document.getElementById('iconImg').style.display = 'block';
+                document.getElementById('iconText').style.display = 'none';
+            };
             reader.readAsDataURL(file);
         }
     }
 
-    async function generateAPK() {
+    async function createAPK() {
         const appName = document.getElementById('appName').value.trim();
-        const webUrl = document.getElementById('webUrl').value.trim();
+        const packageName = document.getElementById('packageName').value.trim();
+        const splashAnimation = document.getElementById('splashAnimation').checked;
+        const iconFile = document.getElementById('appIcon').files[0];
+        const statusBox = document.getElementById('statusBox');
+        const downloadBtn = document.getElementById('downloadBtn');
         const buildBtn = document.getElementById('buildBtn');
-        const progressArea = document.getElementById('progressArea');
-        const progressFill = document.getElementById('progressFill');
-        const statusText = document.getElementById('statusText');
-        const downloadArea = document.getElementById('downloadArea');
-        const downloadLink = document.getElementById('downloadLink');
 
-        if (!appName || !webUrl) {
-            alert("Please provide both App Name and Website URL!");
+        if (!appName || !packageName) {
+            alert("App Name এবং Package Name পূরণ করুন!");
             return;
         }
 
+        const formData = new FormData();
+        formData.append('deviceId', deviceId);
+        formData.append('appName', appName);
+        formData.append('packageName', packageName);
+        formData.append('splashAnimation', splashAnimation);
+
+        if (iconFile) formData.append('appIcon', iconFile);
+
+        if (currentMode === 'url') {
+            const url = document.getElementById('targetUrl').value.trim();
+            if (!url) { alert("Website URL দিন!"); return; }
+            formData.append('targetUrl', url);
+        } else {
+            const zip = document.getElementById('htmlZip').files[0];
+            if (!zip) { alert("HTML Zip ফাইল আপলোড করুন!"); return; }
+            if (zip.size > 5 * 1024 * 1024) { alert("Zip ফাইল ৫ MB-এর কম হতে হবে!"); return; }
+            formData.append('htmlZip', zip);
+        }
+
         buildBtn.disabled = true;
-        downloadArea.style.display = 'none';
-        progressArea.style.display = 'block';
+        downloadBtn.style.display = 'none';
+        statusBox.innerText = "APK তৈরি হচ্ছে... অপেক্ষা করুন...";
 
-        // Step 1: Validating
-        progressFill.style.width = '25%';
-        statusText.innerText = "Configuring App Settings...";
+        try {
+            const res = await fetch('/api/create-apk', { method: 'POST', body: formData });
+            const data = await res.json();
 
-        setTimeout(async () => {
-            progressFill.style.width = '60%';
-            statusText.innerText = "Compiling & Signing APK...";
-
-            try {
-                const response = await fetch('/api/generate-apk', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ appName, webUrl })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.downloadUrl) {
-                    progressFill.style.width = '100%';
-                    statusText.innerText = "APK Generated Successfully!";
-                    downloadLink.href = data.downloadUrl;
-                    downloadLink.setAttribute('download', `${appName.replace(/\s+/g, '_')}.apk`);
-                    downloadArea.style.display = 'block';
-                } else {
-                    statusText.innerText = "Error: " + (data.error || "Failed to generate APK");
-                }
-            } catch (err) {
-                statusText.innerText = "Connection error! Check server logs.";
-            } finally {
-                buildBtn.disabled = false;
+            if (res.ok && data.success) {
+                statusBox.innerText = "সফলভাবে তৈরি হয়েছে!";
+                downloadBtn.href = data.downloadUrl;
+                downloadBtn.style.display = 'block';
+                document.getElementById('tokenDisplay').innerText = `আজকের বাকি: ${data.tokensRemaining} / 5 APK`;
+            } else {
+                statusBox.innerText = "ত্রুটি: " + (data.error || "ব্যর্থ হয়েছে");
             }
-        }, 1500);
+        } catch(e) {
+            statusBox.innerText = "সার্ভারের সাথে যোগাযোগ ব্যর্থ হয়েছে!";
+        } finally {
+            buildBtn.disabled = false;
+        }
     }
 </script>
 
